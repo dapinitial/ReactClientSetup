@@ -10,6 +10,7 @@ export function signinUser({ email, password }) {
       .post(`${ROOT_URL}/signin`, { email, password })
       .then(response => {
         dispatch({ type: AUTH_USER });
+        localStorage.setItem("token", response.data.token);
         browserHistory.push("/feature");
       })
       .catch(() => {});
