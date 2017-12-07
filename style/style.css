@@ -5,3 +5,7 @@
 .field {
   margin-bottom: 8px;
 }
+
+.error {
+  color: #ff0000;
+}
