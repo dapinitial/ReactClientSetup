@@ -15,15 +15,15 @@ const renderInput = field => {
 };
 
 class Signup extends Component {
-  handleFormSubmit({ email, password, passwordConfirm }) {
-    console.log(email, password, passwordConfirm);
+  handleFormSubmit({ email, password }) {
+    console.log(email, password);
     // need something to log user in
-    this.props.signupUser({ email, password, passwordConfirm });
+    this.props.signupUser({ email, password });
   }
 
   renderAlert() {
     if (this.props.errorMessage) {
-      console.log("signup!");
+      console.log("westside!");
       return (
         <div className="danger alert-danger">
           <strong>Ooops!</strong> {this.props.errorMessage}
@@ -101,14 +101,15 @@ const validate = values => {
 };
 
 const mapStateToProps = state => {
+  console.log("state", state);
   return {
-    form: state.form
+    form: state.form,
+    errorMessage: state.authReducer.error
   };
 };
 
 Signup = connect(mapStateToProps, actions)(Signup);
 
 export default (Signup = reduxForm({
-  form: "signup",
-  validate
+  form: "signup"
 })(Signup));
