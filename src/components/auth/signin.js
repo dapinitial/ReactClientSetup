@@ -1,21 +1,35 @@
 import React, { Component } from "react";
-import { connect } from "react-redux";
 import { reduxForm, Field } from "redux-form";
+import { connect } from "react-redux";
 import * as actions from "../../actions";
 
-const renderInput = field => (
-  <div>
-    <input {...field.input} type={field.type} />
-    {field.meta.touched &&
-      field.meta.error && <span className="error">{field.meta.error}</span>}
-  </div>
-);
+const renderInput = field => {
+  const { input, type } = field;
+  return (
+    <div>
+      <input {...field.input} type={field.type} />
+      {field.meta.touched &&
+        field.meta.error && <span className="error">{field.meta.error}</span>}
+    </div>
+  );
+};
 
 class Signin extends Component {
   handleFormSubmit({ email, password }) {
     console.log(email, password);
     // need something to log user in
     this.props.signinUser({ email, password });
+  }
+
+  renderAlert() {
+    if (this.props.errorMessage) {
+      console.log("westside!");
+      return (
+        <div className="danger alert-danger">
+          <strong>Ooops!</strong> {this.props.errorMessage}
+        </div>
+      );
+    }
   }
 
   render() {
@@ -26,7 +40,7 @@ class Signin extends Component {
         className="input-group"
         onSubmit={handleSubmit(this.handleFormSubmit.bind(this))}
       >
-        <div className="field">
+        <div className="form-group">
           <label>Email:</label>
           <Field
             name="email" // Specify field name
@@ -35,7 +49,7 @@ class Signin extends Component {
           />
           {/* <input {...email} placeholder="john.doe@example.com" type="email" /> */}
         </div>
-        <div className="field">
+        <div className="form-group">
           <label>Password:</label>
           <Field
             name="password" // Specify field name
@@ -44,7 +58,8 @@ class Signin extends Component {
           />
           {/* <input {...password} placeholder="password" type="password" /> */}
         </div>
-        <button action="submit" className="ui inverted blue button ">
+        {this.renderAlert()}
+        <button action="submit" className="button">
           Sign in
         </button>
       </form>
@@ -52,6 +67,16 @@ class Signin extends Component {
   }
 }
 
-export default reduxForm({
+const mapStateToProps = state => {
+  console.log("state", state);
+  return {
+    form: state.form,
+    errorMessage: state.authReducer.error
+  };
+};
+
+Signin = connect(mapStateToProps, actions)(Signin);
+
+export default (Signin = reduxForm({
   form: "signin" // no fields array given
-})(connect(null, actions)(Signin));
+})(Signin));
