@@ -68,7 +68,7 @@ class Signin extends Component {
 }
 
 const mapStateToProps = state => {
-  console.log("state", state);
+  //console.log("state", state);
   return {
     form: state.form,
     errorMessage: state.authReducer.error
