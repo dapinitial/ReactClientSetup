@@ -69,7 +69,7 @@ class Signup extends Component {
         </div>
         {this.renderAlert()}
         <button action="submit" className="button">
-          Sign in
+          Sign up
         </button>
       </form>
     );
