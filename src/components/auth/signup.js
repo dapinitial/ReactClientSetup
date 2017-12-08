@@ -15,10 +15,10 @@ const renderInput = field => {
 };
 
 class Signup extends Component {
-  handleFormSubmit({ email, password, passwordConfirm }) {
-    console.log(email, password, passwordConfirm);
+  handleFormSubmit({ email, password }) {
+    console.log(email, password);
     // need something to log user in
-    this.props.signupUser({ email, password, passwordConfirm });
+    this.props.signupUser({ email, password });
   }
 
   renderAlert() {
@@ -69,7 +69,7 @@ class Signup extends Component {
         </div>
         {this.renderAlert()}
         <button action="submit" className="button">
-          Sign in
+          Sign up
         </button>
       </form>
     );
@@ -102,7 +102,8 @@ const validate = values => {
 
 const mapStateToProps = state => {
   return {
-    form: state.form
+    form: state.form,
+    errorMessage: state.authReducer.error
   };
 };
 
